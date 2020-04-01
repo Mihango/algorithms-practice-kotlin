@@ -5,15 +5,17 @@ import kotlin.system.measureNanoTime
 import kotlin.system.measureTimeMillis
 
 fun main() {
+    val input = intArrayOf(4, 6, 3, -1, 2, 0)
     val timeSpent = measureNanoTime {
-        println("Merge items 4, 6, 3, -1, 2, 0 ${mergeSort(intArrayOf(4, 6, 3, -1, 2, 0))}")
+        mergeSort(input)
+        println("Merge items 4, 6, 3, -1, 2, 0 ${input.contentToString()}")
     }
     println("Time spent $timeSpent")
 }
 
 fun mergeSort(data: IntArray, start: Int = 0, end: Int = data.size) {
     // break the loop if only one item is remaining
-    if(end - start < 1) {
+    if(end - start < 2) {
         return
     }
 
@@ -27,7 +29,7 @@ fun mergeSort(data: IntArray, start: Int = 0, end: Int = data.size) {
 }
 
 fun merge(data: IntArray, start: Int, mid: Int, end: Int) {
-    if(data[mid-1] < data[mid]) {
+    if(data[mid-1] <= data[mid]) {
         return
     }
 
@@ -42,8 +44,7 @@ fun merge(data: IntArray, start: Int, mid: Int, end: Int) {
     }
 
     // handle items left - copy all items from input from tempIndex
-    System.arraycopy(data, start, data, start + tempIndex, tempIndex)
+    System.arraycopy(data, i, data, start + tempIndex, mid - i)
     // copy item in temp to fill main array from start
     System.arraycopy(temp, 0, data, start, tempIndex)
-
 }
