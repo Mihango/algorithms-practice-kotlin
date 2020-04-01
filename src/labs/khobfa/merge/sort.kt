@@ -1,12 +1,10 @@
 package labs.khobfa.merge
 
-import java.util.*
-import kotlin.system.measureNanoTime
 import kotlin.system.measureTimeMillis
 
 fun main() {
     val input = intArrayOf(4, 6, 3, -1, 2, 0)
-    val timeSpent = measureNanoTime {
+    val timeSpent = measureTimeMillis {
         mergeSort(input)
         println("Merge items 4, 6, 3, -1, 2, 0 ${input.contentToString()}")
     }
