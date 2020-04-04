@@ -1,6 +1,4 @@
-package labs.khobfa.quick
-
-import kotlin.test.currentStackTrace
+package labs.khobfa.sort
 
 fun main() {
     val input = intArrayOf(20, 35, -15, 7, 55, 1, -22)

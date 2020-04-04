@@ -1,4 +1,4 @@
-package labs.khobfa.insertion
+package labs.khobfa.sort
 
 import kotlin.system.measureTimeMillis
 

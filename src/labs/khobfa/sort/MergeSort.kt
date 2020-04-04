@@ -1,4 +1,4 @@
-package labs.khobfa.merge
+package labs.khobfa.sort
 
 import kotlin.system.measureTimeMillis
 
@@ -22,7 +22,7 @@ fun mergeSort(data: IntArray, start: Int = 0, end: Int = data.size) {
 
     // call recursively
     mergeSort(data, start, mid)
-    mergeSort(data,mid, end)
+    mergeSort(data, mid, end)
     merge(data, start, mid, end)
 }
 
