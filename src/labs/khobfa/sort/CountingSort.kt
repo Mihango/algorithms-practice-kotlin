@@ -19,8 +19,8 @@ fun countingSort(data: IntArray, min: Int, max: Int) {
         countArray[data[i] - min]++
     }
 
-    var j =0
-    for(i in min..max){
+    var j = 0
+    for(i in min..max) {
         while (countArray[i-min] > 0) {
             data[j++] = i
             countArray[i - min]--
