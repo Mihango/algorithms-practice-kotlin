@@ -1,9 +1,16 @@
 package labs.khobfa.sort
 
+import kotlin.system.measureTimeMillis
+
+/**
+ * finds largest no. and swap the no with last sorted index
+ */
 fun main() {
     val data = intArrayOf(8, -1, 3, 4)
-    selectionSort(data)
-    println("Sorted Array >>>>> ${data.contentToString()}")
+    val timeTaken = measureTimeMillis {
+        selectionSort(data)
+    }
+    println("Sorted Array >>>>> ${data.contentToString()} >>>>>>> time taken $timeTaken")
 }
 
 fun selectionSort(data: IntArray) {
