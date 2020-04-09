@@ -1,5 +1,7 @@
 package labs.khobfa.arrays
 
+import labs.khobfa.sort.swap
+
 fun main() {
     val data = intArrayOf(9,8,6,5,1,-2)
     var j = 0

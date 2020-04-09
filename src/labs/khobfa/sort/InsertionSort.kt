@@ -10,15 +10,15 @@ fun main() {
     println("Sorted >>>>>>>> ${data.contentToString()} >>>>>>> time take: $timeTaken ")
 }
 
-// insertion sort
-fun insertionSort(items: IntArray) {
-    for(i in 1 until items.size) {
-        val item = items[i]
-        var j = i - 1;
-        while (j >= 0 && items[j] > item) {
-            items[j + 1] = items[j]
+fun insertionSort(data: IntArray) {
+    for(firstUnsortedIndex in 1 until data.size) {
+        val item = data[firstUnsortedIndex]
+        var j = firstUnsortedIndex-1
+
+        while (j >=0 && data[j] > item) {
+            data[j+1] = data[j]
             j -= 1
         }
-        items[j + 1 ] = item
+        data[j + 1] = item
     }
 }
