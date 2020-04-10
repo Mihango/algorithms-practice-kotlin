@@ -22,6 +22,12 @@ fun main() {
         println("Linked list size ${linkedList.getSize()}")
         linkedList.printAll()
         println()
+
+        linkedList.removeFromFront()
+        println("Linked list size ${linkedList.getSize()}")
+        linkedList.printAll()
+        println()
+
     }
 
     println("Time Taken >>>>>>> $timeTaken")
@@ -40,6 +46,15 @@ class EmployeeLinkedList() {
         size++
     }
 
+    fun removeFromFront(): EmployeeNode? {
+        println("Removing item")
+        val removedNode = head
+        head = removedNode?.next
+        size--
+        removedNode?.next = null
+        return removedNode
+    }
+
     fun getSize(): Int = size
     fun isEmpty(): Boolean = head == null
     fun printAll() {
@@ -56,7 +71,7 @@ class EmployeeLinkedList() {
 data class Employee(val firstName: String, val lastName: String, val id: Int)
 
 // a node to be used in linked list
-data class EmployeeNode(val employee: Employee, val next: EmployeeNode?) {
+data class EmployeeNode(val employee: Employee, var next: EmployeeNode?) {
     override fun toString(): String {
         return employee.toString()
     }
