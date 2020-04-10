@@ -6,7 +6,7 @@ fun main() {
     val input = intArrayOf(4, 6, 3, -1, 2, 0)
     val timeSpent = measureTimeMillis {
         mergeSort(input)
-        println("Merge items 4, 6, 3, -1, 2, 0 ${input.contentToString()}")
+        println("Merge items  ${input.contentToString()}")
     }
     println("Time spent $timeSpent")
 }
@@ -23,7 +23,8 @@ fun mergeSort(data: IntArray, start: Int = 0, end: Int = data.size) {
     // call recursively
     mergeSort(data, start, mid)
     mergeSort(data, mid, end)
-    merge(data, start, mid, end)
+//    merge(data, start, mid, end)
+    mergeDesc(data, start, mid, end)
 }
 
 fun merge(data: IntArray, start: Int, mid: Int, end: Int) {
@@ -44,5 +45,22 @@ fun merge(data: IntArray, start: Int, mid: Int, end: Int) {
     // handle items left - copy all items from input from tempIndex
     System.arraycopy(data, i, data, start + tempIndex, mid - i)
     // copy item in temp to fill main array from start
+    System.arraycopy(temp, 0, data, start, tempIndex)
+}
+
+fun mergeDesc(data: IntArray, start: Int, mid: Int, end: Int) {
+    if(data[mid-1] >= data[mid]) {
+        return
+    }
+
+    var i = start
+    var j = mid
+    var tempIndex = 0
+
+    val temp = IntArray(end - start)
+    while (i < mid && j < end) {
+        temp[tempIndex++] = if(data[i] <= data[j]) data[j++] else data[i++]
+    }
+    System.arraycopy(data, start, data, start+tempIndex, mid - i)
     System.arraycopy(temp, 0, data, start, tempIndex)
 }
