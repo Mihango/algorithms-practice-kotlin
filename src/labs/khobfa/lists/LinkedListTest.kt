@@ -59,7 +59,7 @@ class EmployeeLinkedList() {
     fun isEmpty(): Boolean = head == null
     fun printAll() {
         var current = head
-        while (current?.employee != null) {
+        while (current != null) {
             print(" Node >>>. $current ")
             current = current.next
         }
@@ -68,7 +68,27 @@ class EmployeeLinkedList() {
 }
 
 // employee pojo
-data class Employee(val firstName: String, val lastName: String, val id: Int)
+data class Employee(val firstName: String, val lastName: String, val id: Int) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Employee
+
+        if (firstName != other.firstName) return false
+        if (lastName != other.lastName) return false
+        if (id != other.id) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = firstName.hashCode()
+        result = 31 * result + lastName.hashCode()
+        result = 31 * result + id
+        return result
+    }
+}
 
 // a node to be used in linked list
 data class EmployeeNode(val employee: Employee, var next: EmployeeNode?) {
