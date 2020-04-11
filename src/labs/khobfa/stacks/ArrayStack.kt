@@ -1,6 +1,7 @@
 package labs.khobfa.stacks
 
 import labs.khobfa.lists.Employee
+import java.util.*
 
 fun main() {
     val jane = Employee("Jane", "Smith", 3)
@@ -8,7 +9,22 @@ fun main() {
     val mohammed = Employee("Mohamed", "Yusuf", 5)
     val rhyan = Employee("Rhyan", "Jimmy", 6)
 
+    val stack = ArrayStack(4)
     // push
+    println("Stack size >>>>> ${stack.getSize()}")
+    stack.push(jane)
+    stack.push(job)
+    println("Stack size >>>>> ${stack.getSize()}")
+    println("Stack peek >>>>> ${stack.peek()}")
+    println()
+    stack.push(mohammed)
+    stack.printAll()
+    println()
+    println("Stack pop >>>>> ${stack.pop()}")
+    println()
+    stack.push(rhyan)
+    stack.printAll()
+
 
 }
 
@@ -24,21 +40,26 @@ class ArrayStack(private val capacity: Int) {
             }
             stack = newArray
         }
-        stack[++top] = employee
+        stack[top++] = employee
     }
 
+    @Throws(EmptyStackException::class)
     fun pop(): Employee? {
-        if(top != 0) {
-            return stack[--top]
+        if(!isEmpty()) {
+            val employee = stack[--top]
+            stack[top] = null
+            // can recreate the array if the empty spacetop != 0 is big
+            return employee
         }
-        return null
+        throw EmptyStackException()
     }
 
+    @Throws(EmptyStackException::class)
     fun peek(): Employee? {
-        if(top != 0) {
-            return stack[top - 1]
+        if(!isEmpty()) {
+            return stack[top-1]
         }
-        return null
+        throw EmptyStackException()
     }
 
     fun printAll() {
@@ -46,4 +67,7 @@ class ArrayStack(private val capacity: Int) {
             println("$i ====>>>>>>> ${stack[i]}")
         }
     }
+
+    fun getSize(): Int = top
+    fun isEmpty(): Boolean = top == 0
 }
