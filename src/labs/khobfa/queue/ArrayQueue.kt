@@ -47,6 +47,9 @@ class ArrayQueue(capacity: Int = 5) {
 
     fun enqueue(employee: Employee) {
         if(back == queue.size) {
+            // expanding the size of this array have a problem since items at other
+            // position may be null - to solve this problem create a
+            // circular queue - wrap back to front
             val newArray = arrayOfNulls<Employee>(2 * queue.size)
             System.arraycopy(queue, 0, newArray, 0, queue.size)
             queue = newArray
