@@ -22,8 +22,9 @@ fun main() {
     hashTable.printAll()
 }
 
-class SimpleHashTable1 {
-    val data = arrayOfNulls<Employee>(5)
+class SimpleHashTable1(capacity: Int = 5) {
+
+    val data = arrayOfNulls<Employee>(capacity)
 
     fun put(key: String, employee: Employee) {
         val hashedKey = hashKey(key)

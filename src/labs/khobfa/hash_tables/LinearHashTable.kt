@@ -14,42 +14,89 @@ fun main() {
 
     hashTable.put("jane", jane)
     hashTable.put("rhyan", job)
-    hashTable.put("mohammed", mohammed)
+     hashTable.put("mohammed", mohammed)
     // adding jimmy will fail since jimmy and rhyan hashcode == 0
     // to solve this probing collision handling strategies --> Linear probing or chaining
-    hashTable.put("jimmy", rhyan)
-
+    hashTable.put("jimm", rhyan)
     hashTable.printAll()
+
+    println("==========================================")
+    /* returns jane since they have the same hashed key -- need to check if key is te same hence
+    * one need to have saved the key
+    */
+    println("get jimm with initial get without linear probing ${hashTable.get("jimm")}")
+    println("==========================================")
+    println("get jimm with initial get with linear probing ${hashTable.getLinear("jimm")}")
+    println("==========================================")
 }
 
 /**
  * Update on simple has table that solves problem of collision using Linear probing
  */
 class LinearHashTable {
-    val data = arrayOfNulls<Employee>(5)
 
-    fun put(key: String, employee: Employee) {
+    data class StoredEmployee(val key: String, val employee: Employee?)
+
+    val data = arrayOfNulls<StoredEmployee>(5)
+
+    fun put(key: String, value: Employee) {
         var hashedKey = hashKey(key)
-        if(data[hashedKey] == null) {
-            data[hashedKey] = employee
-        } else {
-            // linear probing - add 1 to hashed key until you have position with null
-            // or stop
-            hashedKey +=1
-            if(hashedKey == data.size)
+        if(!isEmpty(hashedKey)) {
+            val stopIndex = hashedKey
+            if(hashedKey == data.size - 1) {
                 hashedKey = 0
+            } else {
+                hashedKey++
+            }
+            while (!isEmpty(hashedKey) && hashedKey != stopIndex) {
+                hashedKey = (hashedKey + 1) % data.size
+            }
+        }
 
-            while (hashedKey != data.size && data[hashedKey] != null) {
-                hashedKey +=1
+        if(isEmpty(hashedKey)) {
+            data[hashedKey] = StoredEmployee(key, value)
+        } else {
+            println("Position $hashedKey has data already ===>> ${data[hashedKey]?.employee?.firstName} " +
+                    "${data[hashedKey]?.employee?.lastName}")
+        }
+    }
+
+    /** initial implementation
+     * return data at hashed key which may be wrong since the hashed key may result to similar
+     * values hence one needs to save the keys
+     */
+    @Deprecated("may return wong data", ReplaceWith("getLinear", "key"),
+        DeprecationLevel.WARNING)
+    fun get(key: String): Employee? {
+        return data[hashKey(key)]?.employee
+    }
+
+    fun getLinear(key: String): Employee? {
+        var hashedKey = hashKey(key)
+        if(key == data[hashedKey]?.key) {
+            return data[hashedKey]?.employee
+        } else {
+            // loop through
+            val stopKey = hashedKey
+            if(hashedKey == data.size - 1) {
+                hashedKey = 0
+            } else {
+                hashedKey++
             }
 
-            if(data[hashedKey] != null) {
-                println("Position already has data")
+            while (data[hashedKey]?.key != key && hashedKey != stopKey) {
+                hashedKey = (hashedKey + 1) % data.size
+            }
+
+            return if(data[hashedKey]?.key == key) {
+                data[hashedKey]?.employee
             } else {
-                data[hashedKey] = employee
+                null
             }
         }
     }
+
+    private fun isEmpty(index: Int) = data[index] == null
 
     /**
      * Simple hash key returning modulus
