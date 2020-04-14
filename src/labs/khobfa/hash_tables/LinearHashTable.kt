@@ -18,16 +18,18 @@ fun main() {
     // adding jimmy will fail since jimmy and rhyan hashcode == 0
     // to solve this probing collision handling strategies --> Linear probing or chaining
     hashTable.put("jimm", rhyan)
+    println("================================= Print all data =================================")
     hashTable.printAll()
 
-    println("==========================================")
+    println("================================= Get without probing =================================")
     /* returns jane since they have the same hashed key -- need to check if key is te same hence
     * one need to have saved the key
     */
     println("get jimm with initial get without linear probing ${hashTable.get("jimm")}")
-    println("==========================================")
+    println("================================= Get with probing=================================")
     println("get jimm with initial get with linear probing ${hashTable.getLinear("jimm")}")
-    println("==========================================")
+    println("================================= Remove with probing =================================")
+    println("remove jane with initial get with linear probing ${hashTable.remove("jane")}")
 }
 
 /**
@@ -72,9 +74,29 @@ class LinearHashTable {
     }
 
     fun getLinear(key: String): Employee? {
-        var hashedKey = hashKey(key)
+        val hashedKey = findKey(key)
+        return if(hashedKey != -1) {
+            data[hashedKey]?.employee
+        } else {
+            null
+        }
+    }
+
+    fun remove(key: String): Employee? {
+        val hashedKey = findKey(key)
+        return if(hashedKey != -1) {
+            null
+        } else {
+            val emp = data[hashedKey]?.employee
+            data[hashedKey] = null
+            emp
+        }
+    }
+
+    private fun findKey(key: String): Int {
+        var hashedKey = hashKey(key);
         if(key == data[hashedKey]?.key) {
-            return data[hashedKey]?.employee
+            return hashedKey
         } else {
             // loop through
             val stopKey = hashedKey
@@ -89,9 +111,9 @@ class LinearHashTable {
             }
 
             return if(data[hashedKey]?.key == key) {
-                data[hashedKey]?.employee
+                hashedKey
             } else {
-                null
+                -1
             }
         }
     }
