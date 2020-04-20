@@ -2,6 +2,7 @@ package labs.khobfa.trees.binary_search
 
 fun main() {
     val intTree = Tree()
+    println("============ In order traversal ============")
     intTree.insert(25)
     intTree.insert(20)
     intTree.insert(15)
@@ -13,6 +14,13 @@ fun main() {
     intTree.insert(32)
 
     intTree.traverseInOrder()
+    println("============ Get Value ============")
+    println("Get 32 >>>> ${intTree.get(32)}")
+    println("Get 50 >>>> ${intTree.get(50)}")
+    println("============ Get Min Value ============")
+    println(intTree.min())
+    println("============ Get Max Value ============")
+    println(intTree.max())
 
 }
 
@@ -40,14 +48,45 @@ class TreeNode(var data: Int) {
         }
     }
 
+    fun get(value: Int): TreeNode? {
+        if (data == value) {
+            return this
+        }
+        return if(value < data){
+            leftChild?.get(value)
+        } else {
+            rightChild?.get(value)
+        }
+    }
+
     fun traverseInOrder() {
-        if(leftChild != null) {
+        if (leftChild != null) {
             leftChild?.traverseInOrder()
         }
         print("$data, ")
-        if(rightChild != null) {
+        if (rightChild != null) {
             rightChild?.traverseInOrder()
         }
+    }
+
+    fun min(): TreeNode {
+        return if(leftChild == null) {
+            this
+        } else {
+            leftChild!!.min()
+        }
+    }
+
+    fun max(): TreeNode {
+        return if(rightChild == null) {
+            this
+        } else {
+            rightChild!!.max()
+        }
+    }
+
+    override fun toString(): String {
+        return "Tree { data : $data }"
     }
 }
 
@@ -63,6 +102,18 @@ class Tree {
 
     fun traverseInOrder() {
         root?.traverseInOrder()
+    }
+
+    fun get(value: Int): TreeNode? {
+        return root?.get(value)
+    }
+
+    fun min(): TreeNode? {
+        return root?.min()
+    }
+
+    fun max(): TreeNode? {
+        return root?.max()
     }
 
 }
