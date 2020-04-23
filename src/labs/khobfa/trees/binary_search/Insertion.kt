@@ -22,6 +22,9 @@ fun main() {
     println("============ Get Max Value ============")
     println(intTree.max())
 
+    intTree.delete(27)
+    intTree.traverseInOrder()
+
 }
 
 
@@ -52,7 +55,7 @@ class TreeNode(var data: Int) {
         if (data == value) {
             return this
         }
-        return if(value < data){
+        return if (value < data) {
             leftChild?.get(value)
         } else {
             rightChild?.get(value)
@@ -70,7 +73,7 @@ class TreeNode(var data: Int) {
     }
 
     fun min(): TreeNode {
-        return if(leftChild == null) {
+        return if (leftChild == null) {
             this
         } else {
             leftChild!!.min()
@@ -78,7 +81,7 @@ class TreeNode(var data: Int) {
     }
 
     fun max(): TreeNode {
-        return if(rightChild == null) {
+        return if (rightChild == null) {
             this
         } else {
             rightChild!!.max()
@@ -108,6 +111,34 @@ class Tree {
         return root?.get(value)
     }
 
+    fun delete(value: Int) {
+        root = delete(root, value)
+    }
+
+    private fun delete(subTreeRoot: TreeNode?, value: Int): TreeNode? {
+        if (subTreeRoot == null)
+            return subTreeRoot
+
+        when {
+            value < subTreeRoot.data -> {
+                subTreeRoot.leftChild = delete(subTreeRoot.leftChild, value)
+            }
+            value > subTreeRoot.data -> {
+                subTreeRoot.rightChild = delete(subTreeRoot.rightChild, value)
+            }
+            else -> {
+                if (subTreeRoot.leftChild == null) {
+                    return subTreeRoot.rightChild
+                } else if (subTreeRoot.rightChild == null) {
+                    return subTreeRoot.leftChild
+                }
+                subTreeRoot.data = subTreeRoot.rightChild!!.min().data
+                subTreeRoot.rightChild = delete(subTreeRoot.rightChild, subTreeRoot.data)
+            }
+        }
+        return subTreeRoot
+    }
+
     fun min(): TreeNode? {
         return root?.min()
     }
@@ -115,5 +146,6 @@ class Tree {
     fun max(): TreeNode? {
         return root?.max()
     }
+
 
 }
