@@ -1,4 +1,4 @@
-package labs.khobfa.trees.binary_search
+package labs.khobfa.trees
 
 fun main() {
     val intTree = Tree()
@@ -12,9 +12,12 @@ fun main() {
     intTree.insert(26)
     intTree.insert(22)
     intTree.insert(32)
+    intTree.insert(17)
 
     intTree.traverseInOrder()
-    println("============ Get Value ============")
+    println("\n============ Pre order traversal ============")
+    intTree.traversePreOrder()
+    println("\n============ Get Value ============")
     println("Get 32 >>>> ${intTree.get(32)}")
     println("Get 50 >>>> ${intTree.get(50)}")
     println("============ Get Min Value ============")
@@ -28,11 +31,10 @@ fun main() {
 }
 
 
-class TreeNode(var data: Int) {
-    var leftChild: TreeNode? = null
-    var rightChild: TreeNode? = null
-
+class TreeNode(var data: Int, var leftChild: TreeNode? = null,
+               var rightChild: TreeNode? = null) {
     fun insert(value: Int) {
+        // doesnt handle duplicates
         if (data == value) {
             return
         }
@@ -72,6 +74,16 @@ class TreeNode(var data: Int) {
         }
     }
 
+    fun traversePreOrder() {
+        print("$data, ")
+        if(leftChild != null) {
+            leftChild?.traversePreOrder()
+        }
+        if(rightChild != null) {
+            rightChild?.traversePreOrder()
+        }
+    }
+
     fun min(): TreeNode {
         return if (leftChild == null) {
             this
@@ -105,6 +117,10 @@ class Tree {
 
     fun traverseInOrder() {
         root?.traverseInOrder()
+    }
+
+    fun traversePreOrder() {
+        root?.traversePreOrder()
     }
 
     fun get(value: Int): TreeNode? {
