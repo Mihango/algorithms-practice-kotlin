@@ -1,18 +1,29 @@
-package labs.khobfa.trees
+ package labs.khobfa.trees
 
 fun main() {
     val intTree = Tree()
     println("============ In order traversal ============")
-    intTree.insert(25)
-    intTree.insert(20)
-    intTree.insert(15)
-    intTree.insert(27)
-    intTree.insert(30)
-    intTree.insert(29)
-    intTree.insert(26)
-    intTree.insert(22)
-    intTree.insert(32)
-    intTree.insert(17)
+//    intTree.insert(25)
+//    intTree.insert(20)
+//    intTree.insert(15)
+//    intTree.insert(27)
+//    intTree.insert(30)
+//    intTree.insert(29)
+//    intTree.insert(26)
+//    intTree.insert(22)
+//    intTree.insert(32)
+//    intTree.insert(17)
+
+    intTree.insertIterative(25)
+    intTree.insertIterative(20)
+    intTree.insertIterative(15)
+    intTree.insertIterative(27)
+    intTree.insertIterative(30)
+    intTree.insertIterative(29)
+    intTree.insertIterative(26)
+    intTree.insertIterative(22)
+    intTree.insertIterative(32)
+    intTree.insertIterative(17)
 
     intTree.traverseInOrder()
     println("\n============ Pre order traversal ============")
@@ -163,5 +174,28 @@ class Tree {
         return root?.max()
     }
 
+    fun insertIterative(value: Int) {
+        if(root == null) {
+            root = TreeNode(value)
+        } else {
+            var parent: TreeNode? = null
+            var current = root
+
+            while (current != null) {
+                parent = current
+                if(value < parent.data) {
+                    current = parent.leftChild
+                } else {
+                    current = parent.rightChild
+                }
+            }
+
+            if(value < parent?.data!!) {
+                parent.leftChild = TreeNode(value)
+            } else {
+                parent.rightChild = TreeNode(value)
+            }
+        }
+    }
 
 }

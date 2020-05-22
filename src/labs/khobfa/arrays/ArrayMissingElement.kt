@@ -5,6 +5,7 @@ import labs.khobfa.sort.swap
 fun main() {
     val data = intArrayOf(1, 3, 3, 3, 5)
     println("Missing nos >>>>>>> ${findMissingCountingSort(data, 1, 5).toIntArray().contentToString()}")
+
 }
 
 fun findMissingElement(data: IntArray): List<Int> {
@@ -48,4 +49,18 @@ fun findMissingCountingSort(data: IntArray, min: Int, max: Int): List<Int> {
         }
     }
     return missing
+}
+
+fun binaryToDecimal(n: String): Int {
+    var dec_value = 0
+
+    // Initializing base value to 1,
+    // i.e 2^0
+    var base = 1
+    val len = n.length
+    for (i in len - 1 downTo 0) {
+        if (n[i] == '1') dec_value += base
+        base = base * 2
+    }
+    return dec_value
 }
